@@ -1,5 +1,6 @@
 {
     let tasks = [];
+    let hideDoneTasks = false;
 
     const removeTask = (taskIndex) => {
         tasks = [
@@ -23,7 +24,25 @@
     };
 
     const addNewTask = (newTaskContent) => {
-        tasks = [...tasks, { content: newTaskContent }];
+        tasks = [...tasks, 
+            { content: newTaskContent }
+        ];
+
+        render();
+    };
+
+    const markAllTasksDone = () => {
+        tasks = tasks.map ((task) => ({
+            ...task,
+            done: true,
+        })); 
+
+        render();
+    };
+
+    const toggleHideDoneTasks = () => {
+        hideDoneTasks = !hideDoneTasks;
+
         render();
     };
 
@@ -47,7 +66,7 @@
         });
     };
 
-    const render = () => {
+    const renderTasks = () => {
         let htmlString = "";
 
         for (const task of tasks) {
@@ -55,7 +74,7 @@
                     <li class="tasks__item js-tasks">
                         <button class="tasks__button tasks__button--toggleDone js-toggleDone">
                         ${task.done ? "✔" : ""}
-                        </button>
+                         </button>
                         <span class="tasks__content${ task.done ? " tasks__content--done" : ""}">
                         ${task.content}
                         </span>
@@ -64,12 +83,21 @@
                         </button>
                     </li>
                 `;
-        }
+        };
 
-        document.querySelector(".js-tasks").innerHTML = htmlString;
+        document.querySelector(".js-tasks").innerHTML = htmlString;};
+
+    const renderButtons = () => {};
+
+    const bindButtonsEvents = () => {};
+
+    const render = () => {
+        renderTasks();
+        renderButtons();
 
         bindRemoveEvents();
         bindToggleDoneEvents();
+        bindButtonsEvents();
     };
 
 
